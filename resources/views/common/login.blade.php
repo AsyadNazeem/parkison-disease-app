@@ -22,28 +22,30 @@
         </div>
     @endif
 
-    <form action="{{ url('login') }}" method="POST">
+    <form action="{{ route('submit.login') }}" method="POST">
         @csrf
         <div class="form-group">
+            <label for="role">Role:</label>
+            <select class="form-control" name="role" id="role" required>
+                <option value="patient">Patient</option>
+                <option value="doctor">Doctor</option>
+            </select>
+        </div>
+        <div class="form-group mt-3">
             <label for="email">Email address:</label>
             <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
         </div>
-        <div class="form-group">
+        <div class="form-group mt-3">
             <label for="password">Password:</label>
-            <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password"
-                   required>
+            <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" required>
         </div>
-        <div class="form-group form-check">
+        <div class="form-group form-check mt-3">
             <input type="checkbox" class="form-check-input" name="remember" id="remember">
             <label class="form-check-label" for="remember">Remember me</label>
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary mt-3">Login</button>
     </form>
-
-    {{--        <div class="mt-3">--}}
-    {{--            <a href="{{ route('password.request') }}">Forgot Password?</a>--}}
-    {{--        </div>--}}
-    <div>
+    <div class="mt-3">
         <p>Don't have an account? <a href="{{ route('index.register') }}">Register here</a></p>
     </div>
 </div>

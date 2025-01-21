@@ -18,10 +18,21 @@ class LoginController extends Controller
 
     public function submit(Request $request)
     {
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
-            return redirect()->route('welcome'); // Change this line to redirect to welcome page
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials, $request->remember)) {
+            $user = Auth::user();
+
+            // Redirect based on role
+            if ($user->role === 'patient') {
+                return redirect()->route('welcome');
+            } elseif ($user->role === 'doctor') {
+                return redirect()->route('doctor.dashboard');
+            }
         }
 
-        return redirect()->route('index.login')->with('error', 'Invalid credentials');
+        return back()->with('error', 'Invalid credentials.');
     }
+
+
 }

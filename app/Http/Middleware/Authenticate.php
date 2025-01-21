@@ -2,8 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Closure;
+use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Support\Facades\Auth;
 
 class Authenticate extends Middleware
 {
@@ -18,6 +19,15 @@ class Authenticate extends Middleware
     {
         if ($this->authenticate($request, $guards) === 'authentication_failed') {
             return redirect()->route('index.login');
+        }
+
+        // Role-based access control
+        if ($request->route()->named('doctor.dashboard') && Auth::user()->role !== 'doctor') {
+            return redirect()->route('welcome')->with('error', 'Unauthorized access');
+        }
+
+        if ($request->route()->named('welcome') && Auth::user()->role !== 'patient') {
+            return redirect()->route('index.login')->with('error', 'Unauthorized access');
         }
 
         $response = $next($request);

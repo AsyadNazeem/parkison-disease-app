@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\PatientDashboardController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ParkinsonController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\LoginController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 // Make login the landing page
 Route::get('/', [LoginController::class, 'index'])->name('index.login');
@@ -17,18 +17,35 @@ Route::post('register', [RegisterController::class, 'submit'])->name('submit.reg
 Route::get('login', [LoginController::class, 'index'])->name('index.login');
 Route::post('login', [LoginController::class, 'submit'])->name('submit.login');
 
-// Welcome page moved to authenticated area
+////PATIENT
+//Route::middleware(['auth', 'role:patient'])->group(function () {
+//    Route::get('welcome', function () {
+//        return view('common.welcome'); // Patient welcome page
+//    })->name('welcome');
+//});
+//
+//
+////    DOCTOR
+//Route::middleware(['auth', 'role:doctor'])->group(function () {
+//    Route::get('doctor/dashboard', function () {
+//        return view('doctor.dashboard'); // Doctor dashboard view
+//    })->name('doctor.dashboard');
+//});
+
+// Authenticated routes
 Route::middleware(['auth'])->group(function () {
+    // Patient routes
     Route::get('welcome', function () {
         return view('common.welcome');
     })->name('welcome');
 
-    Route::get('patient-dashboard', [PatientDashboardController::class, 'index'])
-        ->name('PDashboard.index');
-
     Route::resource('parkinson', ParkinsonController::class);
-});
 
+    // Doctor routes
+    Route::get('doctor/dashboard', function () {
+        return view('doctor.dashboard'); // Doctor dashboard view
+    })->name('doctor.dashboard');
+});
 
 Route::post('logout', function () {
     Auth::logout();
@@ -43,3 +60,25 @@ Route::post('logout', function () {
 
     return $response;
 })->name('logout');
+
+
+
+//Admin
+Route::get('admin/login', [AdminLoginController::class, 'index'])->name('admin.login');
+Route::post('admin/login', [AdminLoginController::class, 'submit'])->name('admin.login.submit');
+
+// Admin-protected routes
+Route::middleware(['auth:admin'])->group(function () {
+    Route::get('admin/dashboard', function () {
+        return view('admin.dashboard'); // Admin dashboard view
+    })->name('admin.dashboard');
+});
+
+Route::post('admin/logout', function () {
+    Auth::guard('admin')->logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect()->route('admin.login')->with('status', 'You have been logged out');
+})->name('admin.logout');
+
+
