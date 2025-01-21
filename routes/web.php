@@ -17,23 +17,8 @@ Route::post('register', [RegisterController::class, 'submit'])->name('submit.reg
 Route::get('login', [LoginController::class, 'index'])->name('index.login');
 Route::post('login', [LoginController::class, 'submit'])->name('submit.login');
 
-////PATIENT
-//Route::middleware(['auth', 'role:patient'])->group(function () {
-//    Route::get('welcome', function () {
-//        return view('common.welcome'); // Patient welcome page
-//    })->name('welcome');
-//});
-//
-//
-////    DOCTOR
-//Route::middleware(['auth', 'role:doctor'])->group(function () {
-//    Route::get('doctor/dashboard', function () {
-//        return view('doctor.dashboard'); // Doctor dashboard view
-//    })->name('doctor.dashboard');
-//});
-
 // Authenticated routes
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'role:patient'])->group(function () {
     // Patient routes
     Route::get('welcome', function () {
         return view('common.welcome');
@@ -41,10 +26,33 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('parkinson', ParkinsonController::class);
 
-    // Doctor routes
+    Route::get('patient/patient-dashboard', function () {
+        return view('patient.patient-dashboard'); // Doctor dashboard view
+    })->name('patient.dashboard');
+
+    Route::get('patient/report', function () {
+        return view('patient.report'); // Doctor dashboard view
+    })->name('patient.report');
+
+    Route::get('patient/book-doctor', function () {
+        return view('patient.book-doctor'); // Doctor dashboard view
+    })->name('patient.book-doctor');
+
+    Route::get('patient/profile', function () {
+        return view('patient.profile'); // Doctor dashboard view
+    })->name('patient.profile');
+
+});
+
+// Doctor routes
+Route::middleware(['auth', 'role:doctor'])->group(function () {
     Route::get('doctor/dashboard', function () {
         return view('doctor.dashboard'); // Doctor dashboard view
     })->name('doctor.dashboard');
+
+    Route::get('doctor/profile', function () {
+        return view('doctor.profile'); // Doctor dashboard view
+    })->name('doctor.profile');
 });
 
 Route::post('logout', function () {
@@ -60,8 +68,6 @@ Route::post('logout', function () {
 
     return $response;
 })->name('logout');
-
-
 
 //Admin
 Route::get('admin/login', [AdminLoginController::class, 'index'])->name('admin.login');

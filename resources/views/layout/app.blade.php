@@ -31,10 +31,10 @@
                     <a class="nav-link" href="{{route('parkinson.index')}}">Prediction</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/patients">Patients</a>
+                    <a class="nav-link" href="/about">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/about">About</a>
+                    <a class="nav-link" href="/patient/patient-dashboard">Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" id="logout-button" class="nav-link">Logout</a>

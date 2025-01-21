@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\MedicalRecord; // Import your MedicalRecord model
+
 
 class ParkinsonController extends Controller
 {
@@ -46,32 +48,50 @@ class ParkinsonController extends Controller
                 'PPE' => 'required|numeric',
             ]);
 
-
-
+            // Convert validated input into JSON to pass to Python script
             $features = json_encode($validated);
 
-            // Debug: Print full path to Python script
+            // Execute Python script and get prediction result
             $pythonScriptPath = base_path('python_scripts/model.py');
-            \Log::info('Python script path:', ['path' => $pythonScriptPath]);
-
-            // Debug: Check if file exists
-            if (!file_exists($pythonScriptPath)) {
-                return back()->with('error', 'Python script not found at: ' . $pythonScriptPath);
-            }
-
-            // Debug: Print full command
             $command = "python3 " . escapeshellcmd($pythonScriptPath) . " '" . $features . "'";
-            \Log::info('Full command:', ['command' => $command]);
-
-            // Execute with error output
             $output = shell_exec($command . " 2>&1");
-            \Log::info('Command output:', ['output' => $output]);
 
-            if (empty($output)) {
+            // Trim output to get the final result
+            $result = trim($output);
+
+            if (empty($result)) {
                 return back()->with('error', 'No prediction result received');
             }
 
-            return back()->with('result', trim($output));
+            // Save the result and inputs to the database
+            MedicalRecord::create([
+                'user_id' => auth()->id(),
+                'MDVP_Fo_Hz' => $validated['MDVP_Fo_Hz'],
+                'MDVP_Fhi_Hz' => $validated['MDVP_Fhi_Hz'],
+                'MDVP_Flo_Hz' => $validated['MDVP_Flo_Hz'],
+                'MDVP_Jitter' => $validated['MDVP_Jitter'],
+                'MDVP_Jitter_Abs' => $validated['MDVP_Jitter_Abs'],
+                'MDVP_RAP' => $validated['MDVP_RAP'],
+                'MDVP_PPQ' => $validated['MDVP_PPQ'],
+                'Jitter_DDP' => $validated['Jitter_DDP'],
+                'MDVP_Shimmer' => $validated['MDVP_Shimmer'],
+                'MDVP_Shimmer_dB' => $validated['MDVP_Shimmer_dB'],
+                'Shimmer_APQ3' => $validated['Shimmer_APQ3'],
+                'Shimmer_APQ5' => $validated['Shimmer_APQ5'],
+                'MDVP_APQ' => $validated['MDVP_APQ'],
+                'Shimmer_DDA' => $validated['Shimmer_DDA'],
+                'NHR' => $validated['NHR'],
+                'HNR' => $validated['HNR'],
+                'RPDE' => $validated['RPDE'],
+                'DFA' => $validated['DFA'],
+                'spread1' => $validated['spread1'],
+                'spread2' => $validated['spread2'],
+                'D2' => $validated['D2'],
+                'PPE' => $validated['PPE'],
+                'result' => $result, // Save the prediction result
+            ]);
+
+            return back()->with('result', $result);
         } catch (\Exception $e) {
             \Log::error('Error:', ['message' => $e->getMessage()]);
             return back()->with('error', 'Error: ' . $e->getMessage());

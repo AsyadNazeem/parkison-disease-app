@@ -1,0 +1,8 @@
+.dashboard-container .nav-link {
+    font-size: 1rem;
+    padding: 10px;
+}
+.dashboard-container .nav-link:hover {
+    background-color: #495057;
+    border-radius: 5px;
+}

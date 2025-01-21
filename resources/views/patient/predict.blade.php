@@ -11,6 +11,12 @@
         </div>
     @endif
 
+    @if(session('error'))
+        <div class="error">
+            Error: {{ session('error') }}
+        </div>
+    @endif
+
     <!-- List all input fields -->
     <label for="MDVP_Fo_Hz">MDVP:Fo(Hz):</label>
     <input type="text" name="MDVP_Fo_Hz" value="197.07600" required><br>
