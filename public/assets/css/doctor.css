@@ -1,0 +1,8 @@
+/* Prevent interaction with the dashboard while popup is shown */
+.swal2-shown > body {
+    overflow: hidden;
+}
+.swal2-shown .dashboard-container {
+    filter: blur(3px);
+    pointer-events: none;
+}
