@@ -25,21 +25,22 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/welcome">Home</a>
+                    <a class="nav-link {{ Request::routeIs('welcome') ? 'active' : '' }}" href="/welcome">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('parkinson.index')}}">Prediction</a>
+                    <a class="nav-link {{ Request::routeIs('parkinson.index') ? 'active' : '' }}" href="{{route('parkinson.index')}}">Prediction</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/about">About</a>
+                    <a class="nav-link {{ Request::routeIs('about') ? 'active' : '' }}" href="/about">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/patient/patient-dashboard">Dashboard</a>
+                    <a class="nav-link {{ Request::routeIs('patient.dashboard') ? 'active' : '' }}" href="/patient/patient-dashboard">Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" id="logout-button" class="nav-link">Logout</a>
                 </li>
             </ul>
+
         </div>
     </nav>
 </header>

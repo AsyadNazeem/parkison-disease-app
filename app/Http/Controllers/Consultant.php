@@ -37,7 +37,22 @@ class Consultant extends Controller
 
         // Handle the profile picture upload if provided
         if ($request->hasFile('profile_picture')) {
-            $neurologist->profile_picture = $request->file('profile_picture')->store('profile_pictures', 'public');
+            // Define the destination path in the main public folder
+            $destinationPath = public_path('assets/profile_pictures');
+
+            // Ensure the directory exists
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+
+            // Generate a unique file name
+            $fileName = uniqid() . '_' . $request->file('profile_picture')->getClientOriginalName();
+
+            // Move the file to the destination path
+            $request->file('profile_picture')->move($destinationPath, $fileName);
+
+            // Save the relative path for database storage
+            $neurologist->profile_picture = 'profile_pictures/' . $fileName;
         }
 
         // Save the data to the database
@@ -46,5 +61,6 @@ class Consultant extends Controller
         // Redirect back with a success message
         return redirect()->back()->with('success', 'Neurologist registered successfully!');
     }
+
 }
 

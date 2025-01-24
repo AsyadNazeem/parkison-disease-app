@@ -6,3 +6,9 @@
     background-color: #495057;
     border-radius: 5px;
 }
+
+.nav-link.active {
+    background-color: #007bff; /* Change this to any color you'd like */
+    color: #fff; /* Adjust text color if needed */
+    font-weight: bold; /* Optional: makes the text bold */
+}

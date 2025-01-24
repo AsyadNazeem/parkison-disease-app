@@ -6,7 +6,7 @@
     <title>Parkinson Disease Detection</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/css/patient.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/common.css') }}">
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -18,10 +18,67 @@
 </head>
 <body>
 
+@if(Auth::user()->status === 'inactive')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function showInactiveAlert() {
+                Swal.fire({
+                    title: 'Account Inactive',
+                    text: 'Your account is inactive. Please contact a Super Admin to activate your account. You cannot proceed until activation.',
+                    icon: 'error',
+                    showCancelButton: true,
+                    confirmButtonText: 'OK',
+                    cancelButtonText: 'Logout',
+                    cancelButtonColor: '#d33',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                    didClose: () => {
+                        // Show the alert again after a brief timeout
+                        setTimeout(showInactiveAlert, 100);
+                    }
+                }).then((result) => {
+                    if (result.dismiss === Swal.DismissReason.cancel) {
+                        // Submit the logout form
+                        const logoutForm = document.createElement('form');
+                        logoutForm.method = 'POST';
+                        logoutForm.action = "{{ route('admin.logout') }}";
+
+                        // Add CSRF token
+                        const csrfToken = document.createElement('input');
+                        csrfToken.type = 'hidden';
+                        csrfToken.name = '_token';
+                        csrfToken.value = "{{ csrf_token() }}";
+                        logoutForm.appendChild(csrfToken);
+
+                        document.body.appendChild(logoutForm);
+                        logoutForm.submit();
+                    }
+                });
+            }
+
+            // Trigger the alert
+            showInactiveAlert();
+        });
+    </script>
+
+    <style>
+        /* Prevent interaction with the dashboard while popup is shown */
+        .swal2-shown > body {
+            overflow: hidden;
+        }
+        .swal2-shown .dashboard-container {
+            filter: blur(3px);
+            pointer-events: none;
+        }
+    </style>
+@endif
+
+
 <div class="dashboard-container">
     <!-- Top Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand ms-3" href="#">Patient Dashboard</a>
+        <a class="navbar-brand ms-3" href="">Admin Dashboard</a>
         <div class="ms-auto me-3">
             <!-- Dropdown for Account and Logout -->
             <div class="dropdown">
@@ -30,7 +87,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
                     <li>
-                        <a class="dropdown-item" href="{{route('patient.profile')}}">
+                        <a class="dropdown-item" href="#">
                             <i class="bi bi-person"></i> Profile
                         </a>
                     </li>
@@ -38,7 +95,7 @@
                         <hr class="dropdown-divider">
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{route('patient.profile')}}">
+                        <a class="dropdown-item" href="#" id="settings-trigger">
                             <i class="bi bi-gear"></i> Settings
                         </a>
                     </li>
@@ -46,9 +103,12 @@
                         <hr class="dropdown-divider">
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#" id="logout-button">
-                            <i class="bi bi-box-arrow-right"></i> Logout
-                        </a>
+                        <form action="{{ route('admin.logout') }}" method="POST" style="display: inline;">
+                            @csrf
+                            <button type="submit" class="dropdown-item">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </button>
+                        </form>
                     </li>
 
                 </ul>
@@ -62,36 +122,35 @@
             <div class="col-md-2 bg-dark text-white vh-100 pt-4">
                 <ul class="nav flex-column">
                     <li class="nav-item mb-3">
-                        <a class="nav-link text-white {{ Request::routeIs('patient.dashboard') ? 'active' : '' }}" href="{{route('patient.dashboard')}}">
+                        <a class="nav-link text-white {{ Request::routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
                             <i class="bi bi-speedometer2"></i> Dashboard
                         </a>
                     </li>
                     <li class="nav-item mb-3">
-                        <a class="nav-link text-white {{ Request::routeIs('patient.report') ? 'active' : '' }}" href="{{route('patient.report')}}">
-                            <i class="bi bi-file-earmark-text"></i> Reports
+                        <a class="nav-link text-white {{ Request::routeIs('index.doctors') ? 'active' : '' }}" href="{{ route('index.doctors') }}">
+                            <i class="bi bi-clipboard2-pulse"></i> Doctors
                         </a>
                     </li>
                     <li class="nav-item mb-3">
-                        <a class="nav-link text-white {{ Request::routeIs('patient.consultation') ? 'active' : '' }}" href="{{route('patient.consultation')}}">
-                            <i class="bi bi-calendar-plus"></i> Book a Doctor
+                        <a class="nav-link text-white {{ Request::routeIs('index.patients') ? 'active' : '' }}" href="{{ route('index.patients') }}">
+                            <i class="bi bi-lungs"></i> Patients
                         </a>
                     </li>
                     <li class="nav-item mb-3">
-                        <a class="nav-link text-white {{ Request::routeIs('patient.bookings') ? 'active' : '' }}" href="{{route('patient.bookings')}}">
-                            <i class="bi bi-calendar2-check"></i> Booking
+                        <a class="nav-link text-white {{ Request::routeIs('admin.list') ? 'active' : '' }}" href="{{ route('admin.list') }}">
+                            <i class="bi bi-calendar-plus"></i> Admins
                         </a>
                     </li>
-                    <li class="nav-item mb-3">
-                        <a class="nav-link text-white {{ Request::routeIs('index.medical-history') ? 'active' : '' }}" href="{{route('index.medical-history')}}">
-                            <i class="bi bi-file-medical"></i> Medical Records
-                        </a>
-                    </li>
-                    <li class="nav-item mb-3">
-                        <a class="nav-link text-white {{ Request::routeIs('welcome') ? 'active' : '' }}" href="/welcome">
-                            <i class="bi bi-back"></i> Back
-                        </a>
-                    </li>
+                    @if(Auth::user()->role === 'superadmin')
+                        <li class="nav-item mb-3">
+                            <a class="nav-link text-white {{ Request::routeIs('index.register') ? 'active' : '' }}" href="{{ route('index.register') }}">
+                                <i class="bi bi-plus-circle"></i> Register New Admin
+                            </a>
+                        </li>
+                    @endif
                 </ul>
+
+
             </div>
 
             <div class="col-md-10 p-4">
@@ -102,12 +161,12 @@
     </div>
 </div>
 
-<!-- Settings Modal -->
-<div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+<!-- Doctor Settings Modal -->
+<div class="modal fade" id="doctorSettingsModal" tabindex="-1" aria-labelledby="doctorSettingsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="settingsModalLabel">Settings</h5>
+                <h5 class="modal-title" id="doctorSettingsModalLabel">Settings</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -116,17 +175,17 @@
                     <div class="col-md-3 border-end">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link active" id="general-tab" data-bs-toggle="tab" href="#general">
+                                <a class="nav-link active" id="general-tab" data-bs-toggle="tab" href="#doctor-general">
                                     <i class="bi bi-gear"></i> General
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile">
+                                <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#doctor-profile">
                                     <i class="bi bi-person"></i> Profile
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="password-tab" data-bs-toggle="tab" href="#password">
+                                <a class="nav-link" id="password-tab" data-bs-toggle="tab" href="#doctor-password">
                                     <i class="bi bi-lock"></i> Password
                                 </a>
                             </li>
@@ -137,29 +196,29 @@
                     <div class="col-md-9">
                         <div class="tab-content">
                             <!-- General Tab -->
-                            <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                            <div class="tab-pane fade show active" id="doctor-general" role="tabpanel" aria-labelledby="general-tab">
                                 <h4>General Settings</h4>
                                 <p>Settings related to general application preferences.</p>
                             </div>
 
                             <!-- Profile Tab -->
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="tab-pane fade" id="doctor-profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <h4>Profile Settings</h4>
                                 <form>
                                     <div class="mb-3">
-                                        <label for="name" class="form-label">Name</label>
-                                        <input type="text" class="form-control" id="name" value="{{ Auth::user()->name }}">
+                                        <label for="doctor-name" class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="doctor-name" value="{{ Auth::user()->name }}">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email" value="{{ Auth::user()->email }}">
+                                        <label for="doctor-email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="doctor-email" value="{{ Auth::user()->email }}">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Save Changes</button>
                                 </form>
                             </div>
 
                             <!-- Password Tab -->
-                            <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+                            <div class="tab-pane fade" id="doctor-password" role="tabpanel" aria-labelledby="password-tab">
                                 <h4>Password Settings</h4>
                                 <form>
                                     <div class="mb-3">
@@ -188,21 +247,22 @@
     </div>
 </div>
 
+
 <!-- Trigger Modal Script -->
 <script>
-    document.querySelector('a[href="{{route('patient.profile')}}"]').addEventListener('click', function (e) {
+    document.getElementById('settings-trigger').addEventListener('click', function (e) {
         e.preventDefault();
-        var settingsModal = new bootstrap.Modal(document.getElementById('settingsModal'));
+        var settingsModal = new bootstrap.Modal(document.getElementById('doctorSettingsModal'));
         settingsModal.show();
     });
 </script>
+
 
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <!-- SweetAlert2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 
 <script>
     // Logout confirmation popup
@@ -221,7 +281,7 @@
                 // Submit the logout form via JavaScript
                 const logoutForm = document.createElement('form');
                 logoutForm.method = 'POST';
-                logoutForm.action = "{{ route('logout') }}";
+                logoutForm.action = "{{route('admin.logout')}}";
                 logoutForm.style.display = 'none';
                 const csrfInput = document.createElement('input');
                 csrfInput.type = 'hidden';
@@ -243,6 +303,62 @@
     if (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) {
         window.location.reload(true);
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const statusButtons = document.querySelectorAll('.status-btn');
+
+        statusButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const form = this.closest('.status-form');
+                const action = this.textContent.trim(); // Activate or Deactivate
+
+                Swal.fire({
+                    title: `Are you sure you want to ${action.toLowerCase()} this admin?`,
+                    text: `You are about to ${action.toLowerCase()} this admin. This action can be reversed later.`,
+                    icon: action === 'inactive' ? 'warning' : 'info',
+                    showCancelButton: true,
+                    confirmButtonText: `Yes, ${action}`,
+                    cancelButtonText: 'Cancel',
+                    confirmButtonColor: action === 'inactive' ? '#d33' : '#3085d6',
+                    cancelButtonColor: '#6c757d'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+
+        const toggleButtons = document.querySelectorAll('.toggle-status-btn');
+
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const doctorId = this.dataset.id;
+                const action = this.dataset.status;
+                const form = document.getElementById('toggleStatusForm');
+                const url = "{{ route('admin.doctors.toggleStatus', ':id') }}".replace(':id', doctorId);
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: `Do you really want to ${action} this doctor?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, proceed!',
+                    cancelButtonText: 'Cancel',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.action = url;
+                        form.submit();
+                    }
+                });
+            });
+        });
+    });
 </script>
 </body>
 </html>

@@ -37,7 +37,7 @@
                                     <td>{{ $booking->patient_notes ?? 'N/A' }}</td>
                                     <td>
                                         @if ($booking->report_path)
-                                            <a href="{{ asset('storage/' . $booking->report_path) }}" target="_blank">View Report</a>
+                                            <a href="{{ asset('assets/' . $booking->report_path) }}" target="_blank">View Report</a>
                                         @else
                                             N/A
                                         @endif

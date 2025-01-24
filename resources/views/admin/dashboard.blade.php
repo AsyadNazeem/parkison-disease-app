@@ -1,6 +1,8 @@
-<h1>Test</h1>
+@extends('admin.admin_layout')
 
-<form method="POST" action="{{ route('admin.logout') }}">
-    @csrf
-    <button type="submit" class="btn btn-danger">Logout</button>
-</form>
+@section('content')
+
+
+    <h1>Test</h1>
+
+@endsection

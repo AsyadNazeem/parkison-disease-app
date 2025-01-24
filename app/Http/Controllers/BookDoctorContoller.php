@@ -54,7 +54,22 @@ class BookDoctorContoller extends Controller
         // Handle report upload
         $reportPath = null;
         if ($request->hasFile('report')) {
-            $reportPath = $request->file('report')->store('reports', 'public');
+            // Define the destination path inside the main public folder
+            $destinationPath = public_path('assets/patient_reports');
+
+            // Ensure the directory exists
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+
+            // Generate a unique file name
+            $fileName = uniqid() . '_' . $request->file('report')->getClientOriginalName();
+
+            // Move the file to the destination path
+            $request->file('report')->move($destinationPath, $fileName);
+
+            // Save the relative path for database storage
+            $reportPath = 'patient_reports/' . $fileName;
         }
 
         // Create the booking entry
@@ -75,6 +90,7 @@ class BookDoctorContoller extends Controller
 
         return redirect()->route('patient.consultation')->with('success', 'Booking confirmed and payment processed successfully!');
     }
+
 
     public function viewBookings()
     {

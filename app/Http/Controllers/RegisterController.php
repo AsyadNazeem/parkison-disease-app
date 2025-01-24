@@ -19,36 +19,34 @@ class RegisterController extends Controller
 
     function submit(RegisterRequest $request)
     {
-
-
         $user = new User();
 
-        if($request -> hasFile('license_number')){
-            $image = $request -> file('license_number');
-            $fileName = $image -> store('','public');
-            $filePath = '/assets/' . $fileName;
-            $user -> license_number = $filePath;
+        if ($request->hasFile('license_number')) {
+            $image = $request->file('license_number');
+
+            // Define the destination path inside the main public folder
+            $destinationPath = public_path('assets/doctors_id');
+
+            // Generate a unique file name
+            $fileName = uniqid() . '_' . $image->getClientOriginalName();
+
+            // Move the file to the main public folder
+            $image->move($destinationPath, $fileName);
+
+            // Save the file path relative to the public folder
+            $user->license_number = 'assets/doctors_id/' . $fileName;
         }
 
-        $user -> name = $request -> name;
-        $user -> email = $request -> email;
-        $user -> password = $request -> password;
-        $user -> role = $request -> role;
-        $user -> status = ($request -> role == 'doctor') ? 'pending' : 'approved';
-        $user -> save();
-
-
-//        // Create the user with the appropriate role
-//        $user = User::create([
-//            'name' => $request->name,
-//            'email' => $request->email,
-//            'password' => Hash::make($request->password),
-//            'role' => $request->role,
-//            'license_number' => $licensePath, // Store the file path
-//            'status' => ($request->role == 'doctor') ? 'pending' : 'approved', // Pending approval for doctors
-//        ]);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password); // Encrypt the password before saving
+        $user->role = $request->role;
+        $user->status = ($request->role == 'doctor') ? 'pending' : 'approved';
+        $user->save();
 
         // Redirect to login page with success message
         return redirect()->route('index.login')->with('success', 'Registration successful!');
     }
+
+
 }

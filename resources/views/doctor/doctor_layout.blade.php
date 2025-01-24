@@ -120,31 +120,27 @@
             <div class="col-md-2 bg-dark text-white vh-100 pt-4">
                 <ul class="nav flex-column">
                     <li class="nav-item mb-3">
-                        <a class="nav-link text-white" href="{{route('doctor.dashboard')}}">
+                        <a class="nav-link text-white {{ Request::routeIs('doctor.dashboard') ? 'active' : '' }}" href="{{route('doctor.dashboard')}}">
                             <i class="bi bi-speedometer2"></i> Dashboard
                         </a>
                     </li>
                     <li class="nav-item mb-3">
-                        <a class="nav-link text-white" href="{{route('index.patients')}}">
-                            <i class="bi bi-bag-plus"></i></i> patients
+                        <a class="nav-link text-white {{ Request::routeIs('index.patient') ? 'active' : '' }}" href="{{route('index.patient')}}">
+                            <i class="bi bi-bag-plus"></i> Patients
                         </a>
                     </li>
                     <li class="nav-item mb-3">
-                        <a class="nav-link text-white" href="{{route('index.consultation-date')}}">
+                        <a class="nav-link text-white {{ Request::routeIs('index.consultation-date') ? 'active' : '' }}" href="{{route('index.consultation-date')}}">
                             <i class="bi bi-calendar-plus"></i> Add Consultation Date
                         </a>
                     </li>
                     <li class="nav-item mb-3">
-                        <a class="nav-link text-white" href="{{route('index.consultant-form')}}">
-                            <i class="bi bi-plus-circle"></i> Register as a consultant
+                        <a class="nav-link text-white {{ Request::routeIs('index.consultant-form') ? 'active' : '' }}" href="{{route('index.consultant-form')}}">
+                            <i class="bi bi-plus-circle"></i> Register as a Consultant
                         </a>
                     </li>
-{{--                    <li class="nav-item mb-3">--}}
-{{--                        <a class="nav-link text-white" href="/welcome">--}}
-{{--                            <i class="bi bi-back"></i> Back--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
                 </ul>
+
             </div>
 
             <div class="col-md-10 p-4">
