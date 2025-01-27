@@ -61,8 +61,264 @@ footer p {
     margin: 0;
 }
 
-/* Responsive Design for Navbar */
+/* Common Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb); /* Light blue gradient */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/*.container-common {*/
+/*    background: #ffffff;*/
+/*    border-radius: 15px;*/
+/*    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);*/
+/*    padding: 40px;*/
+/*    max-width: 1200px;*/
+/*    width: 100%;*/
+/*    margin: 20px auto;*/
+/*}*/
+
+.navbar-brand {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #ffffff !important; /* White text */
+}
+
+.navbar-brand span {
+    color: #4caf50; /* Medical green */
+}
+
+.container-common h1,
+.container-common h2 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    color: #1976d2; /* Medical blue */
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.container-common .form-control {
+    border-radius: 10px;
+    border: 2px solid #e0e0e0;
+    padding: 12px 15px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.container-common .form-control:focus {
+    border-color: #1976d2;
+    box-shadow: none;
+}
+
+.container-common .btn-primary {
+    background-color: #1976d2;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.container-common .btn-primary:hover {
+    background-color: #1565c0;
+}
+
+.container-common .form-label,
+.container-common .form-check-label {
+    font-weight: 500;
+    color: #555;
+}
+
+.container-common a {
+    color: #1976d2;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.container-common a:hover {
+    color: #1565c0;
+}
+
+.container-common .website-name {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1976d2;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.container-common .website-name span {
+    color: #4caf50; /* Medical green */
+}
+
+.container-common .alert {
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Header Styles */
+header.bg-primary {
+    background-color: #1976d2 !important; /* Medical blue */
+}
+
+header .navbar-brand {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff !important;
+}
+
+header .nav-link {
+    color: #ffffff !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+header .nav-link:hover {
+    color: #e0e0e0 !important;
+}
+
+header .nav-link.active {
+    color: #4caf50 !important; /* Medical green */
+}
+
+/* Footer Styles */
+footer.bg-dark {
+    background-color: #333333 !important;
+    color: #ffffff;
+    padding: 20px 0;
+    margin-top: auto;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Prediction Form Styles */
+.prediction-form {
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    max-width: 800px;
+    width: 100%;
+    margin: 20px auto;
+}
+
+.prediction-form h1 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    color: #1976d2; /* Medical blue */
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.prediction-form label {
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.prediction-form input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: 2px solid #e0e0e0;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.prediction-form input[type="text"]:focus {
+    border-color: #1976d2;
+    box-shadow: none;
+}
+
+.prediction-form button[type="submit"] {
+    background-color: #1976d2;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    width: 100%;
+    cursor: pointer;
+}
+
+.prediction-form button[type="submit"]:hover {
+    background-color: #1565c0;
+}
+
+.prediction-form .result,
+.prediction-form .error {
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.prediction-form .result.positive {
+    background-color: #d4edda; /* Light green for positive result */
+    color: #155724;
+}
+
+.prediction-form .result.negative {
+    background-color: #f8d7da; /* Light red for negative result */
+    color: #721c24;
+}
+
+.prediction-form .error {
+    background-color: #fff3cd; /* Light yellow for error */
+    color: #856404;
+}
+
+/* Responsive Styles */
 @media (max-width: 768px) {
+    .prediction-form {
+        padding: 20px;
+    }
+
+    .prediction-form h1 {
+        font-size: 24px;
+    }
+
+    .prediction-form input[type="text"] {
+        font-size: 14px;
+    }
+
+    .prediction-form button[type="submit"] {
+        font-size: 14px;
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 576px) {
+    /*.container-common {*/
+    /*    padding: 20px;*/
+    /*}*/
+
+    .container-common h1,
+    .container-common h2 {
+        font-size: 24px;
+    }
+
+    .container-common .website-name {
+        font-size: 24px;
+    }
+
+    header .navbar-brand {
+        font-size: 20px;
+    }
+
     header .nav-link {
         margin-left: 0;
         text-align: center;

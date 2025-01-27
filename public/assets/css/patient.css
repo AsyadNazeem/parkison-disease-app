@@ -1,0 +1,297 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f8f9fa; /* Light gray background */
+    margin: 0;
+    height: 100vh;
+    overflow: hidden; /* Prevent body scrolling */
+}
+
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Top Navigation Bar */
+.navbar {
+    background-color: #1976d2 !important; /* Medical blue */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    position: fixed; /* Fix the navbar at the top */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Ensure it stays above other content */
+    flex-shrink: 0; /* Prevent navbar from shrinking */
+}
+
+.navbar-brand {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #ffffff !important; /* White text */
+}
+
+.navbar-brand span {
+    color: #4caf50; /* Medical green */
+}
+
+.dropdown-toggle {
+    color: #ffffff !important; /* White text */
+    text-decoration: none;
+}
+
+.dropdown-menu {
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.dropdown-item {
+    font-size: 14px;
+    color: #555;
+    padding: 8px 16px;
+    transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #1976d2;
+}
+
+/* Sidebar Navigation */
+.bg-dark {
+    background-color: #333333 !important; /* Dark gray */
+    height: 100vh; /* Full height */
+    width: 250px; /* Fixed width for sidebar */
+    position: fixed; /* Fix the sidebar */
+    top: 60px; /* Adjust based on navbar height */
+    left: 0;
+    overflow-y: auto; /* Enable scrolling for sidebar if needed */
+    z-index: 999; /* Ensure it stays below the navbar */
+}
+
+.nav.flex-column {
+    padding: 20px;
+}
+
+.nav-link {
+    color: #ffffff !important; /* White text */
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.nav-link:hover {
+    background-color: #1976d2; /* Medical blue */
+    color: #ffffff !important;
+}
+
+.nav-link.active {
+    background-color: #1976d2; /* Medical blue */
+    color: #ffffff !important;
+}
+
+.nav-link i {
+    margin-right: 10px;
+}
+
+/* Main Content Area */
+.main-content {
+    margin-left: 250px; /* Adjust based on sidebar width */
+    margin-top: 60px; /* Adjust based on navbar height */
+    padding: 20px;
+    overflow-y: auto; /* Enable scrolling for main content */
+    height: calc(100vh - 60px); /* Full height minus navbar height */
+}
+
+/* Settings Modal */
+.modal-content {
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    background-color: #1976d2; /* Medical blue */
+    color: #ffffff;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.modal-title {
+    font-weight: 700;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.nav.flex-column .nav-item {
+    margin-bottom: 10px;
+}
+
+.nav.flex-column .nav-link {
+    color: #555 !important;
+    padding: 8px 16px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.nav.flex-column .nav-link:hover {
+    background-color: #f8f9fa;
+    color: #1976d2 !important;
+}
+
+.nav.flex-column .nav-link.active {
+    background-color: #1976d2; /* Medical blue */
+    color: #ffffff !important;
+}
+
+.container h1 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    color: #1976d2; /* Medical blue */
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table thead {
+    background-color: #1976d2; /* Medical blue */
+    color: #ffffff;
+}
+
+.table th,
+.table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.table th {
+    font-weight: 600;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa; /* Light gray on hover */
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f8f9fa; /* Alternate row color */
+}
+
+.btn-primary {
+    background-color: #1976d2; /* Medical blue */
+    border: none;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #1565c0; /* Darker blue on hover */
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+/* No Records Message */
+.no-records {
+    text-align: center;
+    color: #555;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+/* Book Doctor Page Styles */
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    color: #1976d2; /* Medical blue */
+    margin-bottom: 15px;
+}
+
+.card-text {
+    font-size: 14px;
+    color: #555;
+}
+
+.card-text strong {
+    color: #333;
+}
+
+.bottom-nav {
+    display: none; /* Default to hidden */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    justify-content: space-around;
+    padding: 10px 0;
+    z-index: 10;
+}
+
+.bottom-nav a {
+    color: #1976d2;
+    text-decoration: none;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+.bottom-nav a i {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.bottom-nav a.active {
+    color: #4caf50; /* Active link color */
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    .bg-dark {
+        display: none; /* Hide sidebar on mobile */
+    }
+
+    .main-content {
+        margin: 50px 0 1150px 0; /* Remove sidebar margin on mobile */
+
+    }
+
+    .bottom-nav {
+        display: flex; /* Show bottom navigation bar in mobile view */
+    }
+}

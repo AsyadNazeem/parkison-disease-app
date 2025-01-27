@@ -7,7 +7,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/doctor.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/common.css') }}">
+{{--    <link rel="stylesheet" href="{{ asset('assets/css/common.css') }}">--}}
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -117,7 +117,13 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar Navigation -->
-            <div class="col-md-2 bg-dark text-white vh-100 pt-4">
+            <!-- Toggler Button for Sidebar (Visible only on mobile) -->
+            <button class="btn btn-primary d-lg-none mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
+                <i class="bi bi-list"></i> Menu
+            </button>
+
+            <!-- Side Navigation Bar -->
+            <div class="col-md-2 bg-dark text-white vh-100 pt-4 d-none d-lg-block" id="sidebar">
                 <ul class="nav flex-column">
                     <li class="nav-item mb-3">
                         <a class="nav-link text-white {{ Request::routeIs('doctor.dashboard') ? 'active' : '' }}" href="{{route('doctor.dashboard')}}">
@@ -140,7 +146,6 @@
                         </a>
                     </li>
                 </ul>
-
             </div>
 
             <div class="col-md-10 p-4">

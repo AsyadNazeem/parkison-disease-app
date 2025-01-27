@@ -6,8 +6,8 @@
     <title>Parkinson Disease Detection</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/common.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/patient.css') }}">
+{{--    <link rel="stylesheet" href="{{ asset('assets/css/common.css') }}">--}}
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -143,7 +143,7 @@
                     </li>
                     @if(Auth::user()->role === 'superadmin')
                         <li class="nav-item mb-3">
-                            <a class="nav-link text-white {{ Request::routeIs('index.register') ? 'active' : '' }}" href="{{ route('index.register') }}">
+                            <a class="nav-link text-white {{ Request::routeIs('index.register1') ? 'active' : '' }}" href="{{ route('index.register1') }}">
                                 <i class="bi bi-plus-circle"></i> Register New Admin
                             </a>
                         </li>

@@ -48,9 +48,7 @@ Route::middleware(['auth', 'role:patient'])->group(function () {
 
     Route::get('patient/medical_record', [MedicalHistory::class, 'index'])->name('index.medical-history');
 
-    Route::get('patient/profile', function () {
-        return view('patient.profile'); // Doctor dashboard view
-    })->name('patient.profile');
+//    Route::get('patient/profile', function () { return view('patient.profile'); })->name('patient.profile');
 
 });
 
@@ -106,7 +104,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('admin/patients', [AdminController::class, 'indexPatients'])->name('index.patients');
     Route::get('admin/patients/{id}', [AdminController::class, 'viewPatient'])->name('admin.patients.view');
 
-    Route::get('admin/register', [AdminController::class, 'indexAdmin'])->name('index.register');
+    Route::get('admin/register', [AdminController::class, 'indexAdmin'])->name('index.register1');
     Route::post('admin/register', [AdminController::class, 'registerAdmin'])->name('admin.register');
 
     Route::get('admin/list', [AdminController::class, 'adminListIndex'])->name('admin.list'); // Admin list

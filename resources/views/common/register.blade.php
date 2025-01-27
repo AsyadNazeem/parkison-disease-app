@@ -3,50 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parkinson Disease Detection</title>
+    <title>MediCoSys - Register</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/common.css') }}">
     <!-- Bootstrap CSS -->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+
 </head>
 <body>
-<div class="container">
+<div class="container-common">
+    <!-- Website Name -->
+    <div class="website-name">
+        MediCo<span>Sys</span>
+    </div>
+
+    <!-- Register Form -->
     <h1>Register</h1>
 
     <form method="POST" action="{{ route('submit.register') }}" enctype="multipart/form-data">
         @csrf
-        <!-- Common Fields for Both Patient and Doctor -->
-        <label for="name">Name:</label>
-        <input type="text" name="name" required><br>
-
-        <label for="email">Email:</label>
-        <input type="email" name="email" required><br>
-
-        <label for="password">Password:</label>
-        <input type="password" name="password" required><br>
-
-        <label for="password_confirmation">Confirm Password:</label>
-        <input type="password" name="password_confirmation" required><br>
-
-        <!-- Role Selection (Doctor or Patient) -->
-        <label for="role">Register as:</label>
-        <select name="role" required>
-            <option value="patient">Patient</option>
-            <option value="doctor">Doctor</option>
-        </select><br>
-
-        <!-- Doctor-specific Fields (Only shown if doctor is selected) -->
-        <div id="doctor_fields" style="display: none;">
-            <label for="license_number">Doctor's ID (License Number):</label>
-            <input type="file" name="license_number" accept=".jpg, .jpeg, .png, .pdf"><br>
+        <!-- Name Field -->
+        <div class="form-group mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input type="text" class="form-control" name="name" id="name" required>
         </div>
 
-        <button type="submit">Register</button>
-    </form>
-</div>
+        <!-- Email Field -->
+        <div class="form-group mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" name="email" id="email" required>
+        </div>
 
+        <!-- Password Field -->
+        <div class="form-group mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" class="form-control" name="password" id="password" required>
+        </div>
+
+        <!-- Confirm Password Field -->
+        <div class="form-group mb-3">
+            <label for="password_confirmation" class="form-label">Confirm Password:</label>
+            <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" required>
+        </div>
+
+        <!-- Role Selection -->
+        <div class="form-group mb-3">
+            <label for="role" class="form-label">Register as:</label>
+            <select class="form-control" name="role" id="role" required>
+                <option value="patient">Patient</option>
+                <option value="doctor">Doctor</option>
+            </select>
+        </div>
+
+        <!-- Doctor-specific Fields (Hidden by Default) -->
+        <div id="doctor_fields" class="form-group mb-3" style="display: none;">
+            <label for="license_number" class="form-label">Doctor's ID (License Number):</label>
+            <input type="file" class="form-control" name="license_number" id="license_number" accept=".jpg, .jpeg, .png, .pdf">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary w-100">Register</button>
+    </form>
+
+    <!-- Login Link -->
+    <div class="mt-3 text-center">
+        <p>Already have an account? <a href="{{ route('index.login') }}">Login here</a></p>
+    </div>
+</div>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

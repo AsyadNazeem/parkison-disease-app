@@ -14,10 +14,10 @@
     <meta http-equiv="Expires" content="0">
 </head>
 <body>
-
+<!-- Header -->
 <header class="bg-primary text-white sticky-top">
     <nav class="navbar navbar-expand-lg navbar-dark container">
-        <a class="navbar-brand" href="/welcome">Parkinson App</a>
+        <a class="navbar-brand" href="#">MediCo<span>Sys</span></a> <!-- Updated Heading -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -40,16 +40,18 @@
                     <a href="#" id="logout-button" class="nav-link">Logout</a>
                 </li>
             </ul>
-
         </div>
     </nav>
 </header>
 
-@yield('content')
+<!-- Main Content -->
+<main class="container-common">
+    @yield('content')
+</main>
 
-<!-- Footer Section -->
+<!-- Footer -->
 <footer class="bg-dark text-white text-center py-3">
-    <p>&copy; 2025 Parkinson Disease App. All Rights Reserved.</p>
+    <p>&copy; 2025 MediCoSys. All Rights Reserved.</p> <!-- Updated Footer Text -->
 </footer>
 
 <!-- Bootstrap JS -->

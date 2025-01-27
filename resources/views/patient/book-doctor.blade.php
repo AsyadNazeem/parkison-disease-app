@@ -4,7 +4,6 @@
 
     <div class="container mt-4">
         <h1>Book Doctor</h1>
-        <h2>Welcome, {{ Auth::user()->name }}!</h2>
 
         <div class="row">
             @forelse($consultations as $consultation)
