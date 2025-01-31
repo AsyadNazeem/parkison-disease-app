@@ -250,38 +250,80 @@ body {
 }
 
 .bottom-nav {
-    display: none; /* Default to hidden */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #ffffff; /* White background */
+    padding: 10px 0;
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: #ffffff;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-    justify-content: space-around;
-    padding: 10px 0;
-    z-index: 10;
+    z-index: 1000;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    border-top: 1px solid #e0e0e0; /* Subtle border */
 }
 
-.bottom-nav a {
-    color: #1976d2;
+.bottom-nav a, .dropdown .dropdown-toggle {
+    color: #6c757d; /* Gray text */
     text-decoration: none;
-    font-size: 14px;
+    font-size: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
     transition: color 0.3s ease;
 }
 
-.bottom-nav a i {
-    font-size: 20px;
-    margin-bottom: 5px;
+.bottom-nav a i, .dropdown .dropdown-toggle i {
+    font-size: 25px;
+    margin-bottom: 3px;
 }
 
-.bottom-nav a.active {
+.bottom-nav a span, .dropdown .dropdown-toggle span {
+    font-size: 13px;
+}
+
+.bottom-nav a.active, .dropdown .dropdown-item.active {
     color: #4caf50; /* Active link color */
 }
 
+.dropdown-menu {
+    background-color: #ffffff; /* White background for dropdown */
+    border: 1px solid #e0e0e0; /* Subtle border */
+    padding: 5px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu .dropdown-item {
+    color: #6c757d; /* Gray text */
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.icon{
+    font-size: 5rem;
+}
+
+.icon1{
+    color: black;
+}
+
+.menu-name{
+    color: #6c757d;
+}
+
+.dropdown-menu .dropdown-item i {
+    font-size: 18px;
+    margin-right: 10px; /* Space between icon and text */
+}
+
+
+
 /* Responsive Styles */
 @media (max-width: 1200px) {
+
     .bg-dark {
         display: none; /* Hide sidebar on mobile */
     }

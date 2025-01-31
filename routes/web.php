@@ -14,8 +14,13 @@ use App\Http\Controllers\BookDoctorContoller;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\Report;
 
-// Make login the landing page
-Route::get('/', [LoginController::class, 'index'])->name('index.login');
+// Make welcome the landing page
+Route::get('/', function () {
+    return view('common.welcome');
+})->name('welcome');
+
+// Move Parkinson routes outside middleware
+Route::resource('parkinson', ParkinsonController::class);
 
 // Auth routes
 Route::get('register', [RegisterController::class, 'index'])->name('index.register');
@@ -27,18 +32,11 @@ Route::post('login', [LoginController::class, 'submit'])->name('submit.login');
 // Authenticated routes
 Route::middleware(['auth', 'role:patient'])->group(function () {
     // Patient routes
-    Route::get('welcome', function () {
-        return view('common.welcome');
-    })->name('welcome');
-
-    Route::resource('parkinson', ParkinsonController::class);
-
     Route::get('patient/patient-dashboard', function () {
-        return view('patient.patient-dashboard'); // Doctor dashboard view
+        return view('patient.patient-dashboard');
     })->name('patient.dashboard');
 
     Route::get('patient/report', [Report::class, 'index'])->name('patient.report');
-    // In routes/web.php
     Route::get('patient/download-report/{id}', [Report::class, 'downloadPDF'])->name('download.report');
 
     Route::get('patient/book-doctor', [BookDoctorContoller::class, 'index'])->name('patient.consultation');
@@ -47,9 +45,6 @@ Route::middleware(['auth', 'role:patient'])->group(function () {
     Route::get('patient/my-bookings', [BookDoctorContoller::class, 'viewBookings'])->name('patient.bookings');
 
     Route::get('patient/medical_record', [MedicalHistory::class, 'index'])->name('index.medical-history');
-
-//    Route::get('patient/profile', function () { return view('patient.profile'); })->name('patient.profile');
-
 });
 
 // Doctor routes

@@ -25,20 +25,24 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::routeIs('welcome') ? 'active' : '' }}" href="/welcome">Home</a>
+                    <a class="nav-link {{ Request::routeIs('welcome') ? 'active' : '' }}" href="{{ route('welcome') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::routeIs('parkinson.index') ? 'active' : '' }}" href="{{route('parkinson.index')}}">Prediction</a>
+                    <a class="nav-link {{ Request::routeIs('parkinson.index') ? 'active' : '' }}"
+                       href="{{ route('parkinson.index') }}">Prediction</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::routeIs('about') ? 'active' : '' }}" href="/about">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::routeIs('patient.dashboard') ? 'active' : '' }}" href="/patient/patient-dashboard">Dashboard</a>
+                    <a class="nav-link {{ Request::routeIs('index.login') ? 'active' : '' }}"
+                       href="{{ route('index.login') }}">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" id="logout-button" class="nav-link">Logout</a>
+                    <a class="nav-link {{ Request::routeIs('index.register') ? 'active' : '' }}"
+                       href="{{ route('index.register') }}">Register</a>
                 </li>
+
             </ul>
         </div>
     </nav>
@@ -89,7 +93,7 @@
     });
 
     // Example JavaScript for handling role-based fields (already present in your code)
-    document.querySelector('[name="role"]').addEventListener('change', function() {
+    document.querySelector('[name="role"]').addEventListener('change', function () {
         if (this.value == 'doctor') {
             document.getElementById('doctor_fields').style.display = 'block';
         } else {
@@ -97,7 +101,7 @@
         }
     });
 
-    window.onpageshow = function(event) {
+    window.onpageshow = function (event) {
         if (event.persisted) {
             window.location.reload();
         }

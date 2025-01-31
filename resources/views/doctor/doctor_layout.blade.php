@@ -7,10 +7,17 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/doctor.css') }}">
-{{--    <link rel="stylesheet" href="{{ asset('assets/css/common.css') }}">--}}
+    {{--    <link rel="stylesheet" href="{{ asset('assets/css/common.css') }}">--}}
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css"
+          rel="stylesheet">
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css"
+          rel="stylesheet">
 
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -20,7 +27,7 @@
 
 @if(Auth::user()->status === 'pending')
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             let pendingAlert;
 
             function showPendingAlert() {
@@ -68,13 +75,13 @@
         .swal2-shown > body {
             overflow: hidden;
         }
+
         .swal2-shown .dashboard-container {
             filter: blur(3px);
             pointer-events: none;
         }
     </style>
 @endif
-
 
 
 <div class="dashboard-container">
@@ -84,7 +91,8 @@
         <div class="ms-auto me-3">
             <!-- Dropdown for Account and Logout -->
             <div class="dropdown">
-                <a href="#" class="dropdown-toggle text-dark" id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="#" class="dropdown-toggle text-dark" id="accountDropdown" data-bs-toggle="dropdown"
+                   aria-expanded="false">
                     <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
@@ -114,50 +122,72 @@
         </div>
     </nav>
     <!-- Main Container -->
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar Navigation -->
-            <!-- Toggler Button for Sidebar (Visible only on mobile) -->
-            <button class="btn btn-primary d-lg-none mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
-                <i class="bi bi-list"></i> Menu
-            </button>
-
+    <div class="container-fluid h-100">
+        <div class="row h-100">
             <!-- Side Navigation Bar -->
-            <div class="col-md-2 bg-dark text-white vh-100 pt-4 d-none d-lg-block" id="sidebar">
-                <ul class="nav flex-column">
+            <div class="col-md-2 bg-dark text-white collapse d-lg-block sidebarCollapse" id="sidebarCollapse">
+                <ul class="nav flex-column pt-4">
                     <li class="nav-item mb-3">
-                        <a class="nav-link text-white {{ Request::routeIs('doctor.dashboard') ? 'active' : '' }}" href="{{route('doctor.dashboard')}}">
+                        <a class="nav-link text-white {{ Request::routeIs('doctor.dashboard') ? 'active' : '' }}"
+                           href="{{route('doctor.dashboard')}}">
                             <i class="bi bi-speedometer2"></i> Dashboard
                         </a>
                     </li>
                     <li class="nav-item mb-3">
-                        <a class="nav-link text-white {{ Request::routeIs('index.patient') ? 'active' : '' }}" href="{{route('index.patient')}}">
+                        <a class="nav-link text-white {{ Request::routeIs('index.patient') ? 'active' : '' }}"
+                           href="{{route('index.patient')}}">
                             <i class="bi bi-bag-plus"></i> Patients
                         </a>
                     </li>
                     <li class="nav-item mb-3">
-                        <a class="nav-link text-white {{ Request::routeIs('index.consultation-date') ? 'active' : '' }}" href="{{route('index.consultation-date')}}">
+                        <a class="nav-link text-white {{ Request::routeIs('index.consultation-date') ? 'active' : '' }}"
+                           href="{{route('index.consultation-date')}}">
                             <i class="bi bi-calendar-plus"></i> Add Consultation Date
                         </a>
                     </li>
                     <li class="nav-item mb-3">
-                        <a class="nav-link text-white {{ Request::routeIs('index.consultant-form') ? 'active' : '' }}" href="{{route('index.consultant-form')}}">
+                        <a class="nav-link text-white {{ Request::routeIs('index.consultant-form') ? 'active' : '' }}"
+                           href="{{route('index.consultant-form')}}">
                             <i class="bi bi-plus-circle"></i> Register as a Consultant
                         </a>
                     </li>
                 </ul>
             </div>
 
-            <div class="col-md-10 p-4">
+            <div class="col-md-10 p-4 main-content">
                 @yield('content')
             </div>
 
         </div>
     </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="bottom-nav">
+        <a href="{{route('doctor.dashboard')}}" class="{{ Request::routeIs('doctor.dashboard') ? 'active' : '' }}">
+            <i class="bi bi-speedometer2 icon"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="{{route('index.patient')}}" class="{{ Request::routeIs('index.patient') ? 'active' : '' }}">
+            <i class="bi bi-bag-plus icon"></i>
+            <span>Patients</span>
+        </a>
+        <a href="{{route('index.consultation-date')}}"
+           class="{{ Request::routeIs('index.consultation-date') ? 'active' : '' }}">
+            <i class="bi bi-calendar-plus icon"></i>
+            <span>Add Dates</span>
+        </a>
+        <a href="{{route('index.consultant-form')}}"
+           class="{{ Request::routeIs('index.consultant-form') ? 'active' : '' }}">
+            <i class="bi bi-plus-circle icon"></i>
+            <span>Register</span>
+        </a>
+    </div>
+
 </div>
 
 <!-- Doctor Settings Modal -->
-<div class="modal fade" id="doctorSettingsModal" tabindex="-1" aria-labelledby="doctorSettingsModalLabel" aria-hidden="true">
+<div class="modal fade" id="doctorSettingsModal" tabindex="-1" aria-labelledby="doctorSettingsModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -191,29 +221,34 @@
                     <div class="col-md-9">
                         <div class="tab-content">
                             <!-- General Tab -->
-                            <div class="tab-pane fade show active" id="doctor-general" role="tabpanel" aria-labelledby="general-tab">
+                            <div class="tab-pane fade show active" id="doctor-general" role="tabpanel"
+                                 aria-labelledby="general-tab">
                                 <h4>General Settings</h4>
                                 <p>Settings related to general application preferences.</p>
                             </div>
 
                             <!-- Profile Tab -->
-                            <div class="tab-pane fade" id="doctor-profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="tab-pane fade" id="doctor-profile" role="tabpanel"
+                                 aria-labelledby="profile-tab">
                                 <h4>Profile Settings</h4>
                                 <form>
                                     <div class="mb-3">
                                         <label for="doctor-name" class="form-label">Name</label>
-                                        <input type="text" class="form-control" id="doctor-name" value="{{ Auth::user()->name }}">
+                                        <input type="text" class="form-control" id="doctor-name"
+                                               value="{{ Auth::user()->name }}">
                                     </div>
                                     <div class="mb-3">
                                         <label for="doctor-email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="doctor-email" value="{{ Auth::user()->email }}">
+                                        <input type="email" class="form-control" id="doctor-email"
+                                               value="{{ Auth::user()->email }}">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Save Changes</button>
                                 </form>
                             </div>
 
                             <!-- Password Tab -->
-                            <div class="tab-pane fade" id="doctor-password" role="tabpanel" aria-labelledby="password-tab">
+                            <div class="tab-pane fade" id="doctor-password" role="tabpanel"
+                                 aria-labelledby="password-tab">
                                 <h4>Password Settings</h4>
                                 <form>
                                     <div class="mb-3">
@@ -251,7 +286,6 @@
         settingsModal.show();
     });
 </script>
-
 
 
 <!-- Bootstrap JS -->

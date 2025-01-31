@@ -78,8 +78,8 @@
 <div class="dashboard-container">
     <!-- Top Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand ms-3" href="">Admin Dashboard</a>
-        <div class="ms-auto me-3">
+        <a class="navbar-brand ms-3" href="#">MediCo<span>Sys</span></a> <!-- Updated Heading -->
+        <div class="ms-auto me-3 d-flex align-items-center">
             <!-- Dropdown for Account and Logout -->
             <div class="dropdown">
                 <a href="#" class="dropdown-toggle text-dark" id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -119,8 +119,8 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar Navigation -->
-            <div class="col-md-2 bg-dark text-white vh-100 pt-4">
-                <ul class="nav flex-column">
+            <div class="col-md-2 bg-dark text-white collapse d-lg-block sidebarCollapse" id="sidebarCollapse">
+                <ul class="nav flex-column pt-4">
                     <li class="nav-item mb-3">
                         <a class="nav-link text-white {{ Request::routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
                             <i class="bi bi-speedometer2"></i> Dashboard
@@ -149,16 +149,41 @@
                         </li>
                     @endif
                 </ul>
-
-
             </div>
 
-            <div class="col-md-10 p-4">
+            <div class="col-md-10 p-4 main-content">
                 @yield('content')
             </div>
 
         </div>
     </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="bottom-nav d-lg-none">
+        <a href="{{ route('admin.dashboard') }}" class="{{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">
+            <i class="bi bi-speedometer2 icon"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="{{ route('index.doctors') }}" class="{{ Request::routeIs('index.doctors') ? 'active' : '' }}">
+            <i class="bi bi-clipboard2-pulse icon"></i>
+            <span>Doctors</span>
+        </a>
+        <a href="{{ route('index.patients') }}" class="{{ Request::routeIs('index.patients') ? 'active' : '' }}">
+            <i class="bi bi-lungs icon"></i>
+            <span>Patients</span>
+        </a>
+        <a href="{{ route('admin.list') }}" class="{{ Request::routeIs('admin.list') ? 'active' : '' }}">
+            <i class="bi bi-calendar-plus icon"></i>
+            <span>Admins</span>
+        </a>
+        @if(Auth::user()->role === 'superadmin')
+            <a href="{{ route('index.register1') }}" class="{{ Request::routeIs('index.register1') ? 'active' : '' }}">
+                <i class="bi bi-plus-circle icon"></i>
+                <span>Register Admin</span>
+            </a>
+        @endif
+    </div>
+
 </div>
 
 <!-- Doctor Settings Modal -->

@@ -16,36 +16,39 @@
                     @if ($consultation->bookings->isEmpty())
                         <p>No patients have booked for this slot yet.</p>
                     @else
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Patient Name</th>
-                                <th>Contact Number</th>
-                                <th>Email</th>
-                                <th>Notes</th>
-                                <th>Report</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($consultation->bookings as $index => $booking)
+                        <div class="table-responsive"> <!-- Added for responsiveness -->
+                            <table class="table table-striped">
+                                <thead>
                                 <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $booking->patient_name }}</td>
-                                    <td>{{ $booking->contact_number }}</td>
-                                    <td>{{ $booking->email }}</td>
-                                    <td>{{ $booking->patient_notes ?? 'N/A' }}</td>
-                                    <td>
-                                        @if ($booking->report_path)
-                                            <a href="{{ asset('assets/' . $booking->report_path) }}" target="_blank">View Report</a>
-                                        @else
-                                            N/A
-                                        @endif
-                                    </td>
+                                    <th>#</th>
+                                    <th>Patient Name</th>
+                                    <th>Contact Number</th>
+                                    <th>Email</th>
+                                    <th>Notes</th>
+                                    <th>Report</th>
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                @foreach ($consultation->bookings as $index => $booking)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $booking->patient_name }}</td>
+                                        <td>{{ $booking->contact_number }}</td>
+                                        <td>{{ $booking->email }}</td>
+                                        <td>{{ $booking->patient_notes ?? 'N/A' }}</td>
+                                        <td>
+                                            @if ($booking->report_path)
+                                                <a href="{{ asset('assets/' . $booking->report_path) }}"
+                                                   target="_blank">View Report</a>
+                                            @else
+                                                N/A
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     @endif
                 </div>
             </div>

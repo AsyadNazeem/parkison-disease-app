@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -18,19 +14,27 @@ class LoginController extends Controller
 
     public function submit(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+            'role' => 'required|in:patient,doctor'
+        ]);
 
-        if (Auth::attempt($credentials, $request->remember)) {
-            $user = Auth::user();
+        $remember = $request->has('remember'); // Get remember me value
 
-            // Redirect based on role
-            if ($user->role === 'patient') {
-                return redirect()->route('welcome');
-            } elseif ($user->role === 'doctor') {
-                return redirect()->route('doctor.dashboard');
+        // Remove 'role' from Auth::attempt() because Laravel only verifies email & password
+        if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']], $remember)) {
+            $request->session()->regenerate();
+
+            // Manually check role after authentication
+            if (Auth::user()->role === 'doctor') {
+                return redirect()->intended('/doctor/dashboard');
+
+            } else {
+                return redirect()->intended('/patient/patient-dashboard');
             }
         }
 
-        return back()->with('error', 'Invalid credentials.');
+        return back()->with('error', 'Invalid credentials');
     }
 }

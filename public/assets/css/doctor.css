@@ -1,18 +1,10 @@
-/* Prevent interaction with the dashboard while popup is shown */
-.swal2-shown > body {
-    overflow: hidden;
-}
-.swal2-shown .dashboard-container {
-    filter: blur(3px);
-    pointer-events: none;
-}
 /* General Styles */
 body {
     font-family: 'Poppins', sans-serif;
     background: #f8f9fa; /* Light gray background */
     margin: 0;
     height: 100vh;
-    overflow: hidden; /* Prevent scrolling */
+    overflow: hidden; /* Prevent body scrolling */
 }
 
 .dashboard-container {
@@ -26,6 +18,11 @@ body {
     background-color: #1976d2 !important; /* Medical blue */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 10px 20px;
+    position: fixed; /* Fix the navbar at the top */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Ensure it stays above other content */
     flex-shrink: 0; /* Prevent navbar from shrinking */
 }
 
@@ -67,8 +64,12 @@ body {
 .bg-dark {
     background-color: #333333 !important; /* Dark gray */
     height: 100vh; /* Full height */
-    overflow-y: auto; /* Enable scrolling if content overflows */
-    flex-shrink: 0; /* Prevent sidebar from shrinking */
+    width: 250px; /* Fixed width for sidebar */
+    position: fixed; /* Fix the sidebar */
+    top: 60px; /* Adjust based on navbar height */
+    left: 0;
+    overflow-y: auto; /* Enable scrolling for sidebar if needed */
+    z-index: 999; /* Ensure it stays below the navbar */
 }
 
 .nav.flex-column {
@@ -96,6 +97,15 @@ body {
 
 .nav-link i {
     margin-right: 10px;
+}
+
+/* Main Content Area */
+.main-content {
+    margin-left: 250px; /* Adjust based on sidebar width */
+    margin-top: 60px; /* Adjust based on navbar height */
+    padding: 20px;
+    overflow-y: auto; /* Enable scrolling for main content */
+    height: calc(100vh - 60px); /* Full height minus navbar height */
 }
 
 /* Settings Modal */
@@ -139,8 +149,6 @@ body {
     background-color: #1976d2; /* Medical blue */
     color: #ffffff !important;
 }
-
-
 
 .container h1 {
     font-family: 'Roboto', sans-serif;
@@ -241,36 +249,49 @@ body {
     color: #333;
 }
 
+.bottom-nav {
+    display: none; /* Default to hidden */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    justify-content: space-around;
+    padding: 10px 0;
+    z-index: 10;
+}
+
+.bottom-nav a {
+    color: #1976d2;
+    text-decoration: none;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+.bottom-nav a i {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.bottom-nav a.active {
+    color: #4caf50; /* Active link color */
+}
+
 /* Responsive Styles */
-@media (max-width: 768px) {
-    .container {
-        padding: 15px;
+@media (max-width: 1200px) {
+    .bg-dark {
+        display: none; /* Hide sidebar on mobile */
     }
 
-    .table th,
-    .table td {
-        padding: 10px;
+    .main-content {
+        margin: 50px 0 1150px 0; /* Remove sidebar margin on mobile */
+
     }
 
-    .btn-primary {
-        padding: 6px 12px;
-        font-size: 12px;
-    }
-
-    .navbar-brand {
-        font-size: 20px;
-    }
-
-    .nav-link {
-        font-size: 14px;
-    }
-
-    .col-md-10 {
-        margin: 10px;
-        padding: 15px;
-    }
-
-    .card {
-        margin-bottom: 20px;
+    .bottom-nav {
+        display: flex; /* Show bottom navigation bar in mobile view */
     }
 }
