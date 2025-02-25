@@ -4,15 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\ConsultantBooking;
 use App\Models\ConsultationDate;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BookDoctorContoller extends Controller
 {
     // Show available consultations
-    function index()
+    public function index()
     {
+        // Get the current date and time
+        $now = Carbon::now();
+
+        // Retrieve consultations with dates later than the current date and time
         $consultations = ConsultationDate::with('consultant')
+            ->where('date', '>', $now)
             ->whereRaw('max_bookings > booked_count')
             ->get();
 

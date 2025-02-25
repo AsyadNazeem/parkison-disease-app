@@ -7,6 +7,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/patient.css') }}">
+
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <!-- Bootstrap Icons -->
@@ -33,7 +34,7 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Settings</a></li>
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#settingsModal"><i class="bi bi-gear"></i> Settings</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
@@ -63,6 +64,12 @@
                         <a class="nav-link text-white {{ Request::routeIs('patient.report') ? 'active' : '' }}"
                            href="{{route('patient.report')}}">
                             <i class="bi bi-file-earmark-text"></i> Reports
+                        </a>
+                    </li>
+                    <li class="nav-item mb-3">
+                        <a class="nav-link text-white {{ Request::routeIs('parkinson.index') ? 'active' : '' }}"
+                           href="{{route('parkinson.index')}}">
+                            <i class="bi bi-heart-pulse"></i> Predict
                         </a>
                     </li>
                     <li class="nav-item mb-3">

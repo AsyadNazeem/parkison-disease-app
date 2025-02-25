@@ -27,10 +27,10 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::routeIs('welcome') ? 'active' : '' }}" href="{{ route('welcome') }}">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::routeIs('parkinson.index') ? 'active' : '' }}"
-                       href="{{ route('parkinson.index') }}">Prediction</a>
-                </li>
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link {{ Request::routeIs('parkinson.index') ? 'active' : '' }}"--}}
+{{--                       href="{{ route('parkinson.index') }}">Prediction</a>--}}
+{{--                </li>--}}
                 <li class="nav-item">
                     <a class="nav-link {{ Request::routeIs('about') ? 'active' : '' }}" href="/about">About</a>
                 </li>

@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('patient.patient_layout')
 
 @section('content')
     <div class="prediction-form">
