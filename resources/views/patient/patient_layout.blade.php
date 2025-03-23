@@ -164,7 +164,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div
 
                     <!-- Content -->
                     <div class="col-md-9">

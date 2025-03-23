@@ -31,9 +31,9 @@
 {{--                    <a class="nav-link {{ Request::routeIs('parkinson.index') ? 'active' : '' }}"--}}
 {{--                       href="{{ route('parkinson.index') }}">Prediction</a>--}}
 {{--                </li>--}}
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::routeIs('about') ? 'active' : '' }}" href="/about">About</a>
-                </li>
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link {{ Request::routeIs('about') ? 'active' : '' }}" href="/about">About</a>--}}
+{{--                </li>--}}
                 <li class="nav-item">
                     <a class="nav-link {{ Request::routeIs('index.login') ? 'active' : '' }}"
                        href="{{ route('index.login') }}">Login</a>
